@@ -2,6 +2,12 @@ package user
 
 import "errors"
 
+var generator *generatorID
+
+func init() {
+	generator = &generatorID{id: 0}
+}
+
 type UserType int
 
 const (
@@ -16,16 +22,16 @@ type UserBase interface {
 }
 
 type UserBuilder interface {
-	SetName(name string)
+	SetName(name string) UserBuilder
 	Build() (UserBase, error)
 }
 
 func New(userType UserType) (UserBuilder, error) {
 	switch userType {
 	case Student:
-		return nil, nil
+		return &UserStudentBuilder{generator: generator}, nil
 	case Teacher:
-		return nil, nil
+		return &UserTeacherBuilder{generator: generator}, nil
 	default:
 		return nil, errors.New(`invalid user type`)
 	}

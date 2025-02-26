@@ -2,7 +2,7 @@ package user
 
 type UserStudent struct {
 	name string
-	id   int // TODO id should be generated
+	id   int
 }
 
 func (u *UserStudent) GetUserType() UserType {
@@ -18,13 +18,15 @@ func (u *UserStudent) GetID() int {
 }
 
 type UserStudentBuilder struct {
-	name string
+	name      string
+	generator *generatorID
 }
 
-func (b *UserStudentBuilder) SetName(name string) {
+func (b *UserStudentBuilder) SetName(name string) UserBuilder {
 	b.name = name
+	return b
 }
 
 func (b *UserStudentBuilder) Build() (UserBase, error) {
-	return &UserStudent{name: b.name, id: 0}, nil // TODO id should be generated
+	return &UserStudent{name: b.name, id: generator.generateID()}, nil
 }
