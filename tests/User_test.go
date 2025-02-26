@@ -50,3 +50,41 @@ func TestCreateUser(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildUsers(t *testing.T) {
+	tests := []struct {
+		name     string
+		userType user.UserType
+		userName string
+		wantName string
+		wantId   int
+	}{
+		{
+			name:     "Create student",
+			userType: user.Student,
+			userName: "John Doe",
+			wantName: "John Doe",
+			wantId:   1,
+		},
+		{
+			name:     "Create teacher",
+			userType: user.Teacher,
+			userName: "Jane Doe",
+			wantName: "Jane Doe",
+			wantId:   2,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			builder, _ := user.New(tt.userType)
+			user, _ := builder.SetName(tt.userName).Build()
+			if user.GetName() != tt.wantName {
+				t.Errorf("GetName() = %v, want %v", user.GetName(), tt.wantName)
+			}
+			if user.GetID() != tt.wantId {
+				t.Errorf("GetID() = %v, want %v", user.GetID(), tt.wantId)
+			}
+		})
+	}
+}
