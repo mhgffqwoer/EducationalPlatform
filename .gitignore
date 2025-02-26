@@ -1,4 +1,5 @@
 # build directory
 bin
 
-
+# cmd directory
+cmd
