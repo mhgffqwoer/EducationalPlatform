@@ -10,6 +10,7 @@ const (
 )
 
 type UserBase interface {
+	GetUserType() UserType
 	GetName() string
 	GetID() int
 }
