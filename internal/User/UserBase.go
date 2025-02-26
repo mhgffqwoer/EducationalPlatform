@@ -1,11 +1,15 @@
 package user
 
-import "errors"
+import (
+	"errors"
 
-var generator *generatorID
+	generatorid "github.com/mhgffqwoer/EducationalPlatform/internal/GeneratorID"
+)
+
+var generator *generatorid.GeneratorID
 
 func init() {
-	generator = &generatorID{id: 0}
+	generator = generatorid.New()
 }
 
 type UserType int
@@ -18,7 +22,7 @@ const (
 type UserBase interface {
 	GetUserType() UserType
 	GetName() string
-	GetID() int
+	GetID() *generatorid.ID
 }
 
 type UserBuilder interface {

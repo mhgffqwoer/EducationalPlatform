@@ -82,7 +82,7 @@ func TestBuildUsers(t *testing.T) {
 			if user.GetName() != tt.wantName {
 				t.Errorf("GetName() = %v, want %v", user.GetName(), tt.wantName)
 			}
-			if user.GetID() != tt.wantId {
+			if user.GetID().Int() != tt.wantId {
 				t.Errorf("GetID() = %v, want %v", user.GetID(), tt.wantId)
 			}
 		})

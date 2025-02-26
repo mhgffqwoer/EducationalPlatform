@@ -1,8 +1,10 @@
 package user
 
+import generatorid "github.com/mhgffqwoer/EducationalPlatform/internal/GeneratorID"
+
 type UserTeacher struct {
 	name string
-	id   int
+	id   *generatorid.ID
 }
 
 func (u *UserTeacher) GetUserType() UserType {
@@ -13,13 +15,13 @@ func (u *UserTeacher) GetName() string {
 	return u.name
 }
 
-func (u *UserTeacher) GetID() int {
+func (u *UserTeacher) GetID() *generatorid.ID {
 	return u.id
 }
 
 type UserTeacherBuilder struct {
 	name      string
-	generator *generatorID
+	generator *generatorid.GeneratorID
 }
 
 func (b *UserTeacherBuilder) SetName(name string) UserBuilder {
@@ -28,5 +30,5 @@ func (b *UserTeacherBuilder) SetName(name string) UserBuilder {
 }
 
 func (b *UserTeacherBuilder) Build() (UserBase, error) {
-	return &UserTeacher{name: b.name, id: generator.generateID()}, nil
+	return &UserTeacher{name: b.name, id: generator.GenerateID()}, nil
 }
