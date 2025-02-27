@@ -1,8 +1,6 @@
 package user
 
 import (
-	"errors"
-
 	generatorid "github.com/mhgffqwoer/EducationalPlatform/internal/GeneratorID"
 )
 
@@ -12,15 +10,7 @@ func init() {
 	generator = generatorid.New()
 }
 
-type UserType int
-
-const (
-	Student UserType = iota
-	Teacher
-)
-
 type UserBase interface {
-	GetUserType() UserType
 	GetName() string
 	GetID() *generatorid.ID
 }
@@ -30,13 +20,21 @@ type UserBuilder interface {
 	Build() (UserBase, error)
 }
 
-func New(userType UserType) (UserBuilder, error) {
-	switch userType {
-	case Student:
-		return &UserStudentBuilder{generator: generator}, nil
-	case Teacher:
-		return &UserTeacherBuilder{generator: generator}, nil
-	default:
-		return nil, errors.New(`invalid user type`)
-	}
+type UserFactory interface {
+	Teacher() UserBuilder
+	Student() UserBuilder
+}
+
+type UserFactoryImpl struct{}
+
+func (u *UserFactoryImpl) Teacher() UserBuilder {
+	return &UserTeacherBuilder{generator: generator}
+}
+
+func (u *UserFactoryImpl) Student() UserBuilder {
+	return &UserStudentBuilder{generator: generator}
+}
+
+func New() UserFactory {
+	return &UserFactoryImpl{}
 }
