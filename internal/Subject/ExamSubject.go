@@ -11,8 +11,8 @@ import (
 type ExamSubject struct {
 	author   user.UserBase
 	name     string
-	labworks []*components.Labwork
-	lectures []*components.LectureMaterials
+	labworks []components.Labwork
+	lectures []components.LectureMaterials
 	points   int
 	id       *generatorid.ID
 	basic_id *generatorid.ID
@@ -30,11 +30,11 @@ func (s *ExamSubject) GetAuthor() user.UserBase {
 	return s.author
 }
 
-func (s *ExamSubject) GetLabworks() []*components.Labwork {
+func (s *ExamSubject) GetLabworks() []components.Labwork {
 	return s.labworks
 }
 
-func (s *ExamSubject) GetLectures() []*components.LectureMaterials {
+func (s *ExamSubject) GetLectures() []components.LectureMaterials {
 	return s.lectures
 }
 
@@ -51,12 +51,12 @@ func (s *ExamSubject) GetBasicID() *generatorid.ID {
 }
 
 func (s *ExamSubject) Clone() Subject {
-	labworks := make([]*components.Labwork, len(s.labworks))
+	labworks := make([]components.Labwork, len(s.labworks))
 	for i, labwork := range s.labworks {
 		labworks[i] = labwork.Clone()
 	}
 
-	lectures := make([]*components.LectureMaterials, len(s.lectures))
+	lectures := make([]components.LectureMaterials, len(s.lectures))
 	for i, lecture := range s.lectures {
 		lectures[i] = lecture.Clone()
 	}
@@ -84,7 +84,7 @@ func (s *ExamSubject) ChangeName(newName string, author user.UserBase) error {
 	return errors.New("user is not author")
 }
 
-func (s *ExamSubject) ChangeLectures(newLectures []*components.LectureMaterials, author user.UserBase) error {
+func (s *ExamSubject) ChangeLectures(newLectures []components.LectureMaterials, author user.UserBase) error {
 	if author == s.author {
 		s.lectures = newLectures
 		return nil
@@ -105,11 +105,11 @@ type ExamSubjectBuilderName interface {
 }
 
 type ExamSubjectBuilderLectures interface {
-	SetLectures(lectures []*components.LectureMaterials) ExamSubjectBuilderLabworks
+	SetLectures(lectures []components.LectureMaterials) ExamSubjectBuilderLabworks
 }
 
 type ExamSubjectBuilderLabworks interface {
-	SetLabworks(labworks []*components.Labwork) ExamSubjectBuilderFinish
+	SetLabworks(labworks []components.Labwork) ExamSubjectBuilderFinish
 }
 
 type ExamSubjectBuilderFinish interface {
@@ -119,8 +119,8 @@ type ExamSubjectBuilderFinish interface {
 type ExamSubjectBuilder struct {
 	author   user.UserBase
 	name     string
-	labworks []*components.Labwork
-	lectures []*components.LectureMaterials
+	labworks []components.Labwork
+	lectures []components.LectureMaterials
 	points   int
 	id       *generatorid.ID
 }
@@ -140,12 +140,12 @@ func (b *ExamSubjectBuilder) SetName(name string) ExamSubjectBuilderLectures {
 	return b
 }
 
-func (b *ExamSubjectBuilder) SetLectures(lectures []*components.LectureMaterials) ExamSubjectBuilderLabworks {
+func (b *ExamSubjectBuilder) SetLectures(lectures []components.LectureMaterials) ExamSubjectBuilderLabworks {
 	b.lectures = lectures
 	return b
 }
 
-func (b *ExamSubjectBuilder) SetLabworks(labworks []*components.Labwork) ExamSubjectBuilderFinish {
+func (b *ExamSubjectBuilder) SetLabworks(labworks []components.Labwork) ExamSubjectBuilderFinish {
 	b.labworks = labworks
 	return b
 }

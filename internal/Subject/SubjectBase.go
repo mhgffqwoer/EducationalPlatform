@@ -23,14 +23,14 @@ type Subject interface {
 	GetType() SubjectType
 	GetName() string
 	GetAuthor() user.UserBase
-	GetLabworks() []*components.Labwork
-	GetLectures() []*components.LectureMaterials
+	GetLabworks() []components.Labwork
+	GetLectures() []components.LectureMaterials
 	GetPoints() int
 	GetID() *generatorid.ID
 	GetBasicID() *generatorid.ID
 	Clone() Subject
 	ChangeName(newName string, author user.UserBase) error
-	ChangeLectures(newLectures []*components.LectureMaterials, author user.UserBase) error
+	ChangeLectures(newLectures []components.LectureMaterials, author user.UserBase) error
 }
 
 type SubjectFactory interface {

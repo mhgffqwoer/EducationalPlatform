@@ -11,7 +11,17 @@ func init() {
 	generatorLectureMaterials = generatorid.New()
 }
 
-type LectureMaterials struct {
+type LectureMaterials interface {
+	GetAuthor() user.UserBase
+	GetName() string
+	GetDescription() string
+	GetContent() string
+	GetID() *generatorid.ID
+	GetBasicID() *generatorid.ID
+	Clone() LectureMaterials
+}
+
+type LectureMaterialsImpl struct {
 	author      user.UserBase
 	name        string
 	description string
@@ -20,41 +30,43 @@ type LectureMaterials struct {
 	basic_id    *generatorid.ID
 }
 
-func (l *LectureMaterials) GetAuthor() user.UserBase {
+func (l *LectureMaterialsImpl) GetAuthor() user.UserBase {
 	return l.author
 }
 
-func (l *LectureMaterials) GetName() string {
+func (l *LectureMaterialsImpl) GetName() string {
 	return l.name
 }
 
-func (l *LectureMaterials) GetDescription() string {
+func (l *LectureMaterialsImpl) GetDescription() string {
 	return l.description
 }
 
-func (l *LectureMaterials) GetContent() string {
+func (l *LectureMaterialsImpl) GetContent() string {
 	return l.content
 }
 
-func (l *LectureMaterials) GetID() *generatorid.ID {
+func (l *LectureMaterialsImpl) GetID() *generatorid.ID {
 	return l.id
 }
 
-func (l *LectureMaterials) GetBasicID() *generatorid.ID {
+func (l *LectureMaterialsImpl) GetBasicID() *generatorid.ID {
 	if l.basic_id == nil {
 		return nil
 	}
 	return l.basic_id
 }
 
-func (l *LectureMaterials) Clone() *LectureMaterials {
+func (l *LectureMaterialsImpl) Clone() LectureMaterials {
 	result := NewLectureMaterialsBuilder().
 		SetAuthor(l.author).
 		SetName(l.name).
 		SetDescription(l.description).
 		SetContent(l.content).
 		Build()
-	result.basic_id = l.id
+	if result, ok := result.(*LectureMaterialsImpl); ok {
+		result.basic_id = l.id
+	}
 	return result
 }
 
@@ -75,7 +87,7 @@ type LectureMaterialsBuilderContent interface {
 }
 
 type LectureMaterialsBuilderFinish interface {
-	Build() *LectureMaterials
+	Build() LectureMaterials
 }
 
 type LectureMaterialsBuilder struct {
@@ -111,8 +123,8 @@ func (b *LectureMaterialsBuilder) SetContent(content string) LectureMaterialsBui
 	return b
 }
 
-func (b *LectureMaterialsBuilder) Build() *LectureMaterials {
-	return &LectureMaterials{
+func (b *LectureMaterialsBuilder) Build() LectureMaterials {
+	return &LectureMaterialsImpl{
 		author:      b.author,
 		name:        b.name,
 		description: b.description,

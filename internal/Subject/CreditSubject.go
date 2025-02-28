@@ -11,8 +11,8 @@ import (
 type CreditSubject struct {
 	author   user.UserBase
 	name     string
-	labworks []*components.Labwork
-	lectures []*components.LectureMaterials
+	labworks []components.Labwork
+	lectures []components.LectureMaterials
 	points   int
 	id       *generatorid.ID
 	basic_id *generatorid.ID
@@ -30,11 +30,11 @@ func (s *CreditSubject) GetAuthor() user.UserBase {
 	return s.author
 }
 
-func (s *CreditSubject) GetLabworks() []*components.Labwork {
+func (s *CreditSubject) GetLabworks() []components.Labwork {
 	return s.labworks
 }
 
-func (s *CreditSubject) GetLectures() []*components.LectureMaterials {
+func (s *CreditSubject) GetLectures() []components.LectureMaterials {
 	return s.lectures
 }
 
@@ -51,12 +51,12 @@ func (s *CreditSubject) GetBasicID() *generatorid.ID {
 }
 
 func (s *CreditSubject) Clone() Subject {
-	labworks := make([]*components.Labwork, len(s.labworks))
+	labworks := make([]components.Labwork, len(s.labworks))
 	for i, labwork := range s.labworks {
 		labworks[i] = labwork.Clone()
 	}
 
-	lectures := make([]*components.LectureMaterials, len(s.lectures))
+	lectures := make([]components.LectureMaterials, len(s.lectures))
 	for i, lecture := range s.lectures {
 		lectures[i] = lecture.Clone()
 	}
@@ -83,7 +83,7 @@ func (s *CreditSubject) ChangeName(newName string, author user.UserBase) error {
 	return errors.New("user is not author")
 }
 
-func (s *CreditSubject) ChangeLectures(newLectures []*components.LectureMaterials, author user.UserBase) error {
+func (s *CreditSubject) ChangeLectures(newLectures []components.LectureMaterials, author user.UserBase) error {
 	if author == s.author {
 		s.lectures = newLectures
 		return nil
@@ -100,11 +100,11 @@ type CreditSubjectBuilderName interface {
 }
 
 type CreditSubjectBuilderLectures interface {
-	SetLectures(lectures []*components.LectureMaterials) CreditSubjectBuilderLabworks
+	SetLectures(lectures []components.LectureMaterials) CreditSubjectBuilderLabworks
 }
 
 type CreditSubjectBuilderLabworks interface {
-	SetLabworks(labworks []*components.Labwork) CreditSubjectBuilderFinish
+	SetLabworks(labworks []components.Labwork) CreditSubjectBuilderFinish
 }
 
 type CreditSubjectBuilderFinish interface {
@@ -114,8 +114,8 @@ type CreditSubjectBuilderFinish interface {
 type CreditSubjectBuilder struct {
 	author   user.UserBase
 	name     string
-	labworks []*components.Labwork
-	lectures []*components.LectureMaterials
+	labworks []components.Labwork
+	lectures []components.LectureMaterials
 	id       *generatorid.ID
 }
 
@@ -129,12 +129,12 @@ func (b *CreditSubjectBuilder) SetName(name string) CreditSubjectBuilderLectures
 	return b
 }
 
-func (b *CreditSubjectBuilder) SetLectures(lectures []*components.LectureMaterials) CreditSubjectBuilderLabworks {
+func (b *CreditSubjectBuilder) SetLectures(lectures []components.LectureMaterials) CreditSubjectBuilderLabworks {
 	b.lectures = lectures
 	return b
 }
 
-func (b *CreditSubjectBuilder) SetLabworks(labworks []*components.Labwork) CreditSubjectBuilderFinish {
+func (b *CreditSubjectBuilder) SetLabworks(labworks []components.Labwork) CreditSubjectBuilderFinish {
 	b.labworks = labworks
 	return b
 }

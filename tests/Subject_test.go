@@ -12,14 +12,14 @@ func TestExamSubject(t *testing.T) {
 	user, _ := user.New().Student().SetName("John Doe").Build()
 	tests := []struct {
 		name      string
-		labworks  []*components.Labwork
+		labworks  []components.Labwork
 		points    int
 		wantID    int
 		wantError bool
 	}{
 		{
 			name: "Create exam subject, with one labwork and all points equal to 100",
-			labworks: []*components.Labwork{
+			labworks: []components.Labwork{
 				components.NewLabworkBuilder().
 					SetAuthor(user).
 					SetName("Lab 1").
@@ -34,7 +34,7 @@ func TestExamSubject(t *testing.T) {
 		},
 		{
 			name: "Create exam subject, with one labwork and all points not equal to 100",
-			labworks: []*components.Labwork{
+			labworks: []components.Labwork{
 				components.NewLabworkBuilder().
 					SetAuthor(user).
 					SetName("Lab 1").
@@ -49,14 +49,14 @@ func TestExamSubject(t *testing.T) {
 		},
 		{
 			name:      "Create exam subject, without labwork and all points equal to 100",
-			labworks:  []*components.Labwork{},
+			labworks:  []components.Labwork{},
 			points:    100,
 			wantID:    2,
 			wantError: false,
 		},
 		{
 			name:      "Create exam subject, without labwork and all points not equal to 100",
-			labworks:  []*components.Labwork{},
+			labworks:  []components.Labwork{},
 			points:    90,
 			wantID:    -1,
 			wantError: true,
@@ -70,7 +70,7 @@ func TestExamSubject(t *testing.T) {
 				SetExamPoints(tt.points).
 				SetAuthor(user).
 				SetName("ExamSubject").
-				SetLectures([]*components.LectureMaterials{}).
+				SetLectures([]components.LectureMaterials{}).
 				SetLabworks(tt.labworks).
 				Build()
 			if tt.wantError {
@@ -90,13 +90,13 @@ func TestCreditSubject(t *testing.T) {
 	user, _ := user.New().Student().SetName("John Doe").Build()
 	tests := []struct {
 		name      string
-		labworks  []*components.Labwork
+		labworks  []components.Labwork
 		wantID    int
 		wantError bool
 	}{
 		{
 			name: "Create credit subject, with one labwork and all points equal to 100",
-			labworks: []*components.Labwork{
+			labworks: []components.Labwork{
 				components.NewLabworkBuilder().
 					SetAuthor(user).
 					SetName("Lab 1").
@@ -110,7 +110,7 @@ func TestCreditSubject(t *testing.T) {
 		},
 		{
 			name: "Create credit subject, with one labwork and all points not equal to 100",
-			labworks: []*components.Labwork{
+			labworks: []components.Labwork{
 				components.NewLabworkBuilder().
 					SetAuthor(user).
 					SetName("Lab 1").
@@ -124,7 +124,7 @@ func TestCreditSubject(t *testing.T) {
 		},
 		{
 			name:      "Create credit subject, without labworks",
-			labworks:  []*components.Labwork{},
+			labworks:  []components.Labwork{},
 			wantID:    -1,
 			wantError: true,
 		},
@@ -136,7 +136,7 @@ func TestCreditSubject(t *testing.T) {
 				CreditSubject().
 				SetAuthor(user).
 				SetName("ExamSubject").
-				SetLectures([]*components.LectureMaterials{}).
+				SetLectures([]components.LectureMaterials{}).
 				SetLabworks(tt.labworks).
 				Build()
 			if tt.wantError {
@@ -156,13 +156,13 @@ func TestCopyExamSubject(t *testing.T) {
 	user, _ := user.New().Student().SetName("John Doe").Build()
 	tests := []struct {
 		name      string
-		labworks  []*components.Labwork
+		labworks  []components.Labwork
 		points    int
 		wantError bool
 	}{
 		{
 			name: "Copy exam subject",
-			labworks: []*components.Labwork{
+			labworks: []components.Labwork{
 				components.NewLabworkBuilder().
 					SetAuthor(user).
 					SetName("Lab 1").
@@ -183,7 +183,7 @@ func TestCopyExamSubject(t *testing.T) {
 				SetExamPoints(tt.points).
 				SetAuthor(user).
 				SetName("ExamSubject").
-				SetLectures([]*components.LectureMaterials{}).
+				SetLectures([]components.LectureMaterials{}).
 				SetLabworks(tt.labworks).
 				Build()
 			if err != nil {
@@ -203,12 +203,12 @@ func TestCopyCreditSubject(t *testing.T) {
 	user, _ := user.New().Student().SetName("John Doe").Build()
 	tests := []struct {
 		name      string
-		labworks  []*components.Labwork
+		labworks  []components.Labwork
 		wantError bool
 	}{
 		{
 			name: "Copy credit subject",
-			labworks: []*components.Labwork{
+			labworks: []components.Labwork{
 				components.NewLabworkBuilder().
 					SetAuthor(user).
 					SetName("Lab 1").
@@ -227,7 +227,7 @@ func TestCopyCreditSubject(t *testing.T) {
 				CreditSubject().
 				SetAuthor(user).
 				SetName("ExamSubject").
-				SetLectures([]*components.LectureMaterials{}).
+				SetLectures([]components.LectureMaterials{}).
 				SetLabworks(tt.labworks).
 				Build()
 			if err != nil {
