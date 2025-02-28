@@ -16,8 +16,7 @@ func (u *UserTeacher) GetID() *generatorid.ID {
 }
 
 type UserTeacherBuilder struct {
-	name      string
-	generator *generatorid.GeneratorID
+	name string
 }
 
 func (b *UserTeacherBuilder) SetName(name string) UserBuilder {

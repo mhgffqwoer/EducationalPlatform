@@ -28,11 +28,11 @@ type UserFactory interface {
 type UserFactoryImpl struct{}
 
 func (u *UserFactoryImpl) Teacher() UserBuilder {
-	return &UserTeacherBuilder{generator: generator}
+	return &UserTeacherBuilder{}
 }
 
 func (u *UserFactoryImpl) Student() UserBuilder {
-	return &UserStudentBuilder{generator: generator}
+	return &UserStudentBuilder{}
 }
 
 func New() UserFactory {
