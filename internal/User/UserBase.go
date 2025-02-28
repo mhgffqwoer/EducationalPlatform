@@ -10,7 +10,15 @@ func init() {
 	generator = generatorid.New()
 }
 
+type UserType string
+
+const (
+	Teacher UserType = "teacher"
+	Student UserType = "student"
+)
+
 type UserBase interface {
+	GetType() UserType
 	GetName() string
 	GetID() *generatorid.ID
 }

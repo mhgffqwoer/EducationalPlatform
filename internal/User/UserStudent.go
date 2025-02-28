@@ -7,6 +7,10 @@ type UserStudent struct {
 	id   *generatorid.ID
 }
 
+func (u *UserStudent) GetType() UserType {
+	return Student
+}
+
 func (u *UserStudent) GetName() string {
 	return u.name
 }
