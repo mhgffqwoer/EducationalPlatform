@@ -1,4 +1,4 @@
-package user_test
+package tests
 
 import (
 	"testing"
@@ -19,14 +19,14 @@ func TestBuildUsers(t *testing.T) {
 			userBuilder: user.New().Student(),
 			userName:    "John Doe",
 			wantName:    "John Doe",
-			wantId:      1,
+			wantId:      5,
 		},
 		{
 			name:        "Create teacher",
 			userBuilder: user.New().Student(),
 			userName:    "Jane Doe",
 			wantName:    "Jane Doe",
-			wantId:      2,
+			wantId:      6,
 		},
 	}
 
@@ -37,7 +37,7 @@ func TestBuildUsers(t *testing.T) {
 				t.Errorf("GetName() = %v, want %v", user.GetName(), tt.wantName)
 			}
 			if user.GetID().Int() != tt.wantId {
-				t.Errorf("GetID() = %v, want %v", user.GetID(), tt.wantId)
+				t.Errorf("GetID() = %v, want %v", user.GetID().Int(), tt.wantId)
 			}
 		})
 	}
