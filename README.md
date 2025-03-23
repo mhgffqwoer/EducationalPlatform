@@ -50,7 +50,7 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/ваш-username/название-репозитория.git
+   git clone https://github.com/mhgffqwoer/EducationalPlatform
    ```
 2. Пример работы библиотеки (см. `./cmd/main.go`):
    ```bash
